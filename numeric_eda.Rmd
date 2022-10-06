@@ -102,6 +102,46 @@ weather_df %>%
 
 #General summaries
 ```{r}
+weather_df %>%
+  group_by(name,month) %>%
+  summarize(
+    n_obs= n(),
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    sd_prcp = sd(prcp),
+    median_tmax = median(tmax))
+    
+```
+
+
+```{r}
+weather_df %>% 
+  group_by(name, month) %>% 
+  summarise(across(prcp:tmin, mean))
+```
+
+# this is a dataframe!!
+```{r}
+weather_df %>%
+  group_by(name, month) %>%
+  summarize(mean_tmax = mean(tmax)) %>%
+  ggplot(aes(x = month, y = mean_tmax, color = name)) + 
+    geom_point() + geom_line() + 
+    theme(legend.position = "bottom")
+```
+
+
+```{r}
+weather_df %>%
+  group_by(name, month) %>%
+  summarize(mean_tmax = mean(tmax)) %>% 
+  pivot_wider(
+    names_from = name,
+    values_from = mean_tmax) %>% 
+  knitr::kable(digits = 1)
+```
+
+#Window functions
+```{r}
 
 ```
 
